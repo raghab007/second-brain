@@ -2,7 +2,7 @@ import Content from "../models/content";
 import User from "../models/user";
 import Tag from "../models/tag";
 import { Request, response, Response } from "express";
-import { getAllContent } from "../services/content.service";
+import { deleteContent, getAllContent } from "../services/content.service";
 
 export async function createContent(req: Request, res: Response) {
     try {
@@ -46,3 +46,21 @@ export async function getAllContentController(req: Request, res: Response) {
     const contents = await getAllContent(username)
     res.status(200).send(contents);
 }
+
+
+export async function deleteContentController(req: Request, res: Response) {
+    try {
+        const id = req.params.id
+        const result = await deleteContent(id);
+        console.log(result);
+        res.send({
+            message: "Content deleted successfully"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            message: "Server error!"
+        })
+    }
+}
+``
