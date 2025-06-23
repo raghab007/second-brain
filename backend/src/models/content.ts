@@ -15,7 +15,6 @@ const contentSchema = new Schema({
         ref:"User"
     }
 })
-
 const Content = mongoose.model('Content', contentSchema);
 export default Content;
 

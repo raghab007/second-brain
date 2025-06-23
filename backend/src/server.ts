@@ -2,11 +2,14 @@ import express, { Request, Response } from 'express';
 import userRouter from './routes/user.routes';
 import User from './models/user';
 import { userAuth } from './middlewares/auth.middleware';
+import contentRouter from './routes/content.routes';
 
 const app = express();
 
 app.use(express.json());
 app.use('/auth', userRouter);
+app.use('/content', userAuth, contentRouter)
+
 
 app.post('/signup', (req: Request, res: Response) => {
     const user =  req.body;
@@ -17,6 +20,7 @@ app.post('/signup', (req: Request, res: Response) => {
 app.post('/user',userAuth, (req: Request, res: Response) => {
     res.send('hi there');
 });
+
 
 app.listen(8085, () => {
     console.log("Server is listening on 8085");
