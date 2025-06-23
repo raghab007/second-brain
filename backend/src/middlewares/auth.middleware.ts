@@ -8,7 +8,7 @@ export async function userAuth(request: Request, response: Response, next: NextF
             response.status(401).send({
                   message: "Invalid token"
             })
-      } ``
+      }
       console.log(token)
       const bearerToken = token?.split(' ')[1];
       //@ts-ignore
@@ -16,11 +16,12 @@ export async function userAuth(request: Request, response: Response, next: NextF
       const user = await User.findOne({
             username: out.username
       })
-      const user1 = {
-            username: user?.username,
-            password: user?.password
-      }
-      request.body.username = user?.username;
+      //@ts-ignore
+      request.user = {
+            id: user?.id,
+            username: user?.username
+      };
+
       next();
 }
 

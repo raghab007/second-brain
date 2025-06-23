@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { createContent, getAllContent } from "../controllers/content.controller";
+import { createContent, getAllContentController } from "../controllers/content.controller";
 
 const contentRouter = Router();
 
-//contentRouter.get('/content', getAllContent)
+contentRouter.get('/', getAllContentController)
 
-contentRouter.post('/',  createContent)
+contentRouter.post('/', createContent)
 
-export default contentRouter;
+export default contentRouter; 

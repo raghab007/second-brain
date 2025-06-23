@@ -1,13 +1,14 @@
 import Content from "../models/content";
 import User from "../models/user";
 import Tag from "../models/tag";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
+import { getAllContent } from "../services/content.service";
 
 export async function createContent(req: Request, res: Response) {
     try {
         const body = req.body;
         const user = await User.findOne({
-            username: body.username
+            username: (req as any).user.username
         });
         const userId
             = user?.id
@@ -40,6 +41,8 @@ export async function createContent(req: Request, res: Response) {
         })
     }
 }
-export async function getAllContent(req: Request, res: Response) {
- 
+export async function getAllContentController(req: Request, res: Response) {
+    const username = (req as any).user.username;
+    const contents = await getAllContent(username)
+    res.status(200).send(contents);
 }

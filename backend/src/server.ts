@@ -12,12 +12,12 @@ app.use('/content', userAuth, contentRouter)
 
 
 app.post('/signup', (req: Request, res: Response) => {
-    const user =  req.body;
+    const user = req.body;
     User.create(user);
-    res.send('user created');``
+    res.send('user created'); ``
 });
 
-app.post('/user',userAuth, (req: Request, res: Response) => {
+app.post('/user', userAuth, (req: Request, res: Response) => {
     res.send('hi there');
 });
 
