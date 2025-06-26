@@ -12,7 +12,6 @@ export const getAllContent = async function (username: string) {
     return contents;
 }
 
-
 export const deleteContent = async function (id: string) {
     const content = await Content.find({
         id: id

@@ -1,8 +1,10 @@
 import Content from "../models/content";
 import User from "../models/user";
 import Tag from "../models/tag";
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { deleteContent, getAllContent } from "../services/content.service";
+import brcypt from 'bcrypt'
+import { Link } from "../models/link";
 
 export async function createContent(req: Request, res: Response) {
     try {
@@ -63,4 +65,49 @@ export async function deleteContentController(req: Request, res: Response) {
         })
     }
 }
-``
+
+
+export async function createShareableLinkController(req: Request, res: Response) {
+    const username = (req as any).user.username;
+    const user = await User.findOne({
+        username: username
+    })
+    try {
+        const link = {
+            hash: await brcypt.hash(username, 10),
+            user: user?.id
+        }
+        console.log('link')
+        console.log(link)
+
+        const createdLink = await Link.create(link);
+
+        res.send(createdLink);
+
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "Server error"
+        })
+    }
+}
+
+
+export async function getBrainController(req: Request, res: Response) {
+    const hash = req.body.hash;
+    const user = await Link.findOne({
+        hash: hash
+    })
+
+    const contents = await Content.find(
+        {
+            user: user?.user
+        }
+    )
+
+    res.send(contents);
+}
+
+
